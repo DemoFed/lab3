@@ -5,7 +5,8 @@ import string
 import tkinter as tk
 from tkinter import messagebox
 import pygame
-
+HEIGHT = 800
+WIDE = 600
 
 class ValorantKeygen:
     def __init__(self, root):
@@ -32,8 +33,8 @@ class ValorantKeygen:
     def setup_background(self):
         self.canvas = tk.Canvas(
             self.root,
-            width=800,                        # холст для анимированного фона и элементов
-            height=600,
+            width=HEIGHT,                        # холст для анимированного фона и элементов
+            height=HEIGHT,
             bg='#0f1923',
             highlightthickness=0
         )
@@ -43,17 +44,17 @@ class ValorantKeygen:
         self.create_particles(50)  # анимка
 
     def create_gradient_background(self):
-        for y in range(0, 600, 2):
-            r = int(15 + (y / 600) * 5)
-            g = int(25 + (y / 600) * 10)
-            b = int(35 + (y / 600) * 15)
+        for y in range(0, HEIGHT, 2):
+            r = int(15 + (y / HEIGHT) * 5)
+            g = int(25 + (y / HEIGHT) * 10)
+            b = int(35 + (y / HEIGHT) * 15)
             color = f'#{r:02x}{g:02x}{b:02x}'
-            self.canvas.create_line(0, y, 800, y, fill=color, width=2)
+            self.canvas.create_line(0, y, HEIGHT, y, fill=color, width=2)
 
     def create_particles(self, count):
         for _ in range(count):
-            x = random.randint(0, 800)
-            y = random.randint(0, 600)
+            x = random.randint(0, HEIGHT)
+            y = random.randint(0, HEIGHT)
             size = random.randint(1, 3)
             speed = random.uniform(0.5, 2)
             direction = random.uniform(0, 2 * math.pi)
@@ -263,14 +264,7 @@ class ValorantKeygen:
         if not self.animation_running:
             return
 
-        self.pulse_phase = (self.pulse_phase + 0.05) % (2 * math.pi)
-        pulse_intensity = 0.7 + 0.3 * math.sin(self.pulse_phase)
-        r = int(255 * pulse_intensity)
-        g = int(70 * pulse_intensity)
-        b = int(85 * pulse_intensity)
-        pulse_color = f'#{r:02x}{g:02x}{b:02x}'
-        self.generate_btn.config(bg=pulse_color)
-
+        
         self.title_glow_phase = (self.title_glow_phase + 0.03) % (2 * math.pi)
         glow_intensity = 0.8 + 0.2 * math.sin(self.title_glow_phase)
         r = int(255 * glow_intensity)
@@ -300,12 +294,12 @@ class ValorantKeygen:
             particle['y'] += particle['speed'] * math.sin(particle['direction'])
 
             if particle['x'] < 0:
-                particle['x'] = 800
-            elif particle['x'] > 800:
+                particle['x'] = HEIGHT
+            elif particle['x'] > HEIGHT:
                 particle['x'] = 0
             if particle['y'] < 0:
-                particle['y'] = 600
-            elif particle['y'] > 600:
+                particle['y'] = HEIGHT
+            elif particle['y'] > HEIGHT:
                 particle['y'] = 0
 
             x1 = particle['x'] - particle['size']
